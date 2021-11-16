@@ -1,0 +1,19 @@
+version: '3.6'
+
+services:
+  zookeeper:
+    build: 
+      context: .
+      dockerfile: zookeeper/Dockerfile
+    networks:
+      - kafka
+
+  server:
+    build: 
+      context: .
+      dockerfile: server/Dockerfile
+    networks:
+      - kafka
+
+networks:
+  kafka:
