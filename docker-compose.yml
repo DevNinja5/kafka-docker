@@ -2,18 +2,58 @@ version: '3.6'
 
 services:
   zookeeper:
+    ports:
+      - 2181:2181
+    container_name: zookeeper
     build: 
       context: .
       dockerfile: zookeeper/Dockerfile
     networks:
       - kafka
+      - pipes
+
 
   server:
+    ports:
+      - 9092:9092
+    container_name: server
     build: 
       context: .
       dockerfile: server/Dockerfile
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://server:9092,PLAINTEXT_INTERNAL://server:29092
+      KAFKA_CREATE_TOPICS: 'test'
     networks:
       - kafka
+      - pipes
+
+  producer:
+    container_name: producer
+    build: 
+      context: .
+      dockerfile: producer/Dockerfile
+    depends_on:
+      - zookeeper
+      - server
+    networks:
+      - pipes
+
+  consumer:
+    container_name: consumer
+    build: 
+      context: .
+      dockerfile: consumer/Dockerfile
+    depends_on:
+      - zookeeper
+      - server
+    networks:
+      - pipes
+
 
 networks:
   kafka:
+  pipes:
