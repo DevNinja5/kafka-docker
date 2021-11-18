@@ -2,6 +2,7 @@ version: '3.6'
 
 services:
   zookeeper:
+    restart: always
     ports:
       - 2181:2181
     container_name: zookeeper
