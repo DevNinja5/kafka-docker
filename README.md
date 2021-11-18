@@ -1,6 +1,6 @@
 # kafka-docker
 
-To run kafka use command:
+**1. To run kafka use command:**
 
 ```bash
 docker-compose up --build
@@ -8,14 +8,14 @@ docker-compose up --build
 
 Now kafka & consumer is running in this terminal.
 
-Run producer in other terminal to enter message.
+**2. Run producer in other terminal to enter message.**
 
 ```bash
 cd kafka-docker
 docker-compose run producer
 ```
 
-In producer terminal type messages
+**3. In producer terminal type messages**
 
 ```text
 > Hello!
@@ -24,7 +24,7 @@ In producer terminal type messages
 >
 ```
 
-In consumer terminal you will see messages.
+**4. In consumer terminal you will see messages.**
 
 ```text
 Hello!
