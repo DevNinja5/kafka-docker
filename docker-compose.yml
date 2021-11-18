@@ -10,9 +10,8 @@ services:
       dockerfile: zookeeper/Dockerfile
     networks:
       - kafka
-      - pipes
-
-
+    volumes:
+      - ~/Desktop/kafka-zoo:/tmp/zookeeper
   server:
     ports:
       - 9092:9092
@@ -29,8 +28,8 @@ services:
       KAFKA_CREATE_TOPICS: 'test'
     networks:
       - kafka
-      - pipes
-
+    volumes:
+      - ~/Desktop/kafka-data:/tmp/kafka-logs
   producer:
     container_name: producer
     build: 
@@ -40,7 +39,7 @@ services:
       - zookeeper
       - server
     networks:
-      - pipes
+      - kafka
 
   consumer:
     container_name: consumer
@@ -51,9 +50,6 @@ services:
       - zookeeper
       - server
     networks:
-      - pipes
-
-
+      - kafka
 networks:
   kafka:
-  pipes:
